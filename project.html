@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-image: url('https://toylandhk.com/cdn/shop/files/796241717747350_.pic_400x.jpg?v=1718531030'); /* External Image URL */
+      background-size: cover;
+      background-position: center;
+    }
+    .container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+      width: 300px; /* Fixed container width */
+    }
+    h1 {
+      color: #e74c3c;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between; /* Space out the buttons */
+      position: relative;
+      z-index: 1; /* Ensure buttons are positioned correctly */
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+    }
+    #yesButton {
+      background-color: #2ecc71;
+      color: white;
+      position: relative; /* Yes button stays in normal flow */
+      z-index: 2; /* Yes button on top */
+    }
+    #noButton {
+      background-color: #e74c3c;
+      color: white;
+      z-index: 1; /* No button stays behind */
+    }
+    #noButton:hover {
+      background-color: #c0392b;
+    }
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ffd700;
+      animation: confetti-fall 2s linear infinite;
+    }
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100vh) rotate(0deg); }
+      100% { transform: translateY(100vh) rotate(360deg); }
+    }
+    .gif-container {
+      margin-top: 20px;
+    }
+    .gif-container img {
+      width: 100px; /* Adjust the size of the GIF */
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Will You Be My Valentine?</h1>
+    
+    <!-- GIF Image Container -->
+    <div class="gif-container">
+      <img src="https://media.tenor.com/5hNFjHWQYKQAAAAi/bubu-dudu-sseeyall.gif" alt="Animated Heart GIF">
+    </div>
+    
+    <div class="buttons">
+      <button id="yesButton">Yes</button>
+      <button id="noButton">No</button>
+    </div>
+  </div>
+
+  <script>
+    const yesButton = document.getElementById('yesButton');
+    const noButton = document.getElementById('noButton');
+    const buttonsContainer = document.querySelector('.buttons');
+    const container = document.querySelector('.container');
+
+    let yesButtonScale = 1; // Initial scale for "Yes" button
+    let noButtonClickCount = 0; // Track the number of "No" button clicks
+
+    noButton.addEventListener('click', () => {
+      // Scale up the "Yes" button continuously (no upper limit)
+      yesButtonScale += 1; // Increase the scale value by 0.15 on each click
+      yesButton.style.transform = `scale(${yesButtonScale})`;
+
+      // Update the text of the "No" button based on how many times it's been clicked
+      noButtonClickCount++;
+      if (noButtonClickCount === 1) {
+        noButton.textContent = "Are you sure?";
+      } else if (noButtonClickCount === 2) {
+        noButton.textContent = "Are you really sure?";
+      } else if (noButtonClickCount === 3) {
+        noButton.textContent = "Are you really really sure?";
+      } else if (noButtonClickCount === 4) {
+        noButton.textContent = "Are you really really really sure?";
+      } else {
+        // Continue incrementing the level of certainty
+        noButton.textContent = `Are you really really really really sure?`;
+      }
+
+      // Add a fun shake animation to the "No" button
+      noButton.style.transform = 'translateX(10px)';
+      setTimeout(() => { noButton.style.transform = 'translateX(-10px)'; }, 100);
+      setTimeout(() => { noButton.style.transform = 'translateX(0)'; }, 200);
+    });
+
+    yesButton.addEventListener('click', () => {
+      // Play a sound effect (you can replace the URL with your own sound file)
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2993/2993-preview.mp3');
+      audio.play();
+
+      // Show a celebratory message
+      alert("Yay! IS THIS REAL ❤️");
+
+      // Add confetti effect
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.animationDelay = `${Math.random() * 2}s`;
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(confetti);
+      }
+
+      // Change the container background to a celebratory color
+      container.style.backgroundColor = '#fce4ec';
+      container.style.transition = 'background-color 1s';
+    });
+  </script>
+</body>
+</html>
